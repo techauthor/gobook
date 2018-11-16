@@ -1,29 +1,3 @@
-+++
-
-
-title = "使用Hugo创建静态站点"
-
-
-subtitle = "MacOS下创建Hugo站点"
-
-
-date = 2018-11-16T00:00:00
-
-
-lastmod = 2018-01-16T00:00:00
-
-
-draft = false
-
-
-authors = ["Xavier"]
-
-
-tags = ["Hugo"]
-
-
-+++
-
 
 ### 1.1 一个简单的HttpServer
 
