@@ -1,2 +1,2 @@
-# gobook
+# GoBook
 A Golang Book
