@@ -27,7 +27,7 @@ func main() {
 
 **程序说明：**
 
-- 当我们通过/hello url访问时，由HelloGo函数来负责执行，并相应给客户端；
+- 当我们通过/hello url访问时，由HelloGo函数来负责执行，并响应给客户端；
 - HelloGo函数只执行一个非常简单的逻辑，输出字符串“Golang”；
 - ListenAndServe函数，监听8888端口，并启动http server服务；
 
