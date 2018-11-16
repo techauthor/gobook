@@ -1,5 +1,5 @@
 
-### 1.1 一个简单的HttpServer
+## 1.1 一个简单的HttpServer
 
 ---	
 
@@ -54,3 +54,9 @@ $ ./chap1
 浏览器输入[http://localhost:8888/hello](http://localhost:8888/hello)
 
 Bingo~!
+
+### 知识点
+
+#### 1、Go文件结构
+
+#### 2、main方法
