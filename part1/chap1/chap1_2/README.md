@@ -50,6 +50,18 @@ CGO_LDFLAGS="-g -O2"
 PKG_CONFIG="pkg-config"
 GOGCCFLAGS="……"
 ```
+通过```go help```了解go命令的使用方法，具体命令后续也会慢慢接触和介绍。
+
+### go mod 介绍
+
+go mod 命令是1.11版本之后，支持Module之后新增的特性之一。go mod 可以检查代码依赖，
+自动生成项目的mod文件。任何一个源文件目录或者是空目录都可以作为一个module，只要包含
+有mod文件。
+
+#### 初始化Module
+
+通过`go mod init [module name]`来初始化一个Module，完成后在该目录下生成一个
+mod文件，里面只有一行`module [module name]`
 
 **程序说明：**
 
