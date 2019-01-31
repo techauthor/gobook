@@ -1,35 +1,54 @@
 
 ## 1.2 下载安装Go 1.11
 
+前面我们通过一段简单的实操，认识到Golang这门编程语言的优雅和便捷，接下来我们介绍一
+下Go的安装。
 
+本教程使用Go 1.11版本作为该语言的学习版本，因为1.11版本之后，Go语言引入了Module
+概念，支持对依赖的管理。可以从[这里](https://studygolang.com/dl)下载您需要的版本。
 
-前面我们通过一段简单的实操，认识到Golang这门编程语言的优雅和便捷，接下来我们介绍一下Go的安装。
+关于IDE的选择，网络上有很多文章推荐，大家可以根据各自的使用习惯选用，在此仅推荐一款
+非常好用的，Jetbrains的产品GoLand。大家可以从[这里](https://www.jetbrains.com/go/download/#section=mac)
+了解并下载需要的版本。Goland是付费软件，金主或者情怀党可以自行付费。也可以去万能的
+某宝上，买一个EDU邮箱(**很便宜**)，申请学生一年用的激活码，国外软件在这块做得都是比较好的。
 
-本教程使用Go 1.11版本作为该语言的学习版本，因为1.11版本之后，Go语言引入了Module概念，支持对依赖的管理。
-可以从[这里](https://studygolang.com/dl)下载您需要的版本。
+GO安装完成后，我们可以通过以下命令查看我们的安装版本：
 
-关于IDE的选择，网络上有很多文章推荐，大家可以根据各自的使用习惯选用，在此仅推荐一款非常好用的，Jetbrains的产品GoLand。
-大家可以从[这里](https://www.jetbrains.com/go/download/#section=mac)了解并下载需要的版本。Goland是付费软件，金主或者情怀党可以自行付费。
-也可以去万能的某宝上，买一个EDU邮箱，申请学生一年用的激活码，国外软件在这块做得都是比较好的。
+```go version ```
 
-```Golang
-//ch1_1.go
-package main
+通过以下命令查看我们的安装情况：
 
-import (
-	"fmt"
-	"net/http"
-)
+```go env ```
 
-func HelloGo(writer http.ResponseWriter, request *http.Request) {
-	fmt.Fprint(writer,"Golang")
-}
+正确安装会有类似如下显示：
 
-func main() {
-	http.HandleFunc("/hello", HelloGo)
-	http.ListenAndServe(":8888", nil)
-	fmt.Println("hello ch2...")
-}
+```
+GOARCH="amd64"
+GOBIN=""
+GOCACHE="~/Library/Caches/go-build"
+GOEXE=""
+GOFLAGS=""
+GOHOSTARCH="amd64"
+GOHOSTOS="darwin"
+GOOS="darwin"
+GOPATH="~/wks"
+GOPROXY=""
+GORACE=""
+GOROOT="/usr/local/go"
+GOTMPDIR=""
+GOTOOLDIR="/usr/local/go/pkg/tool/darwin_amd64"
+GCCGO="gccgo"
+CC="clang"
+CXX="clang++"
+CGO_ENABLED="1"
+GOMOD="~/gobook/go.mod"
+CGO_CFLAGS="-g -O2"
+CGO_CPPFLAGS=""
+CGO_CXXFLAGS="-g -O2"
+CGO_FFLAGS="-g -O2"
+CGO_LDFLAGS="-g -O2"
+PKG_CONFIG="pkg-config"
+GOGCCFLAGS="……"
 ```
 
 **程序说明：**
