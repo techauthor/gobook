@@ -12,11 +12,11 @@ func Name(c *gin.Context) {
 }
 
 func main() {
-	fmt.Println("hello ch1_2...")
+	fmt.Println("hello chap1_3...")
 	router := gin.New()
 	routerGroup := router.Group("/gobook")
 	//routers.RegisterMiddleWare(g)
 
-	routerGroup.Handle("GET", "/ch1_2/path", Name)
+	routerGroup.Handle("GET", "/chap1_3/path", Name)
 	router.Run(":8888")
 }

@@ -6,7 +6,7 @@
 
 
 ```Golang
-//ch1_1.go
+//chap1_1.go
 package main
 
 import (

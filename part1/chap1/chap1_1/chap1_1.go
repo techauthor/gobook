@@ -11,7 +11,7 @@ func HelloGo(writer http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
-	fmt.Println("hello ch1_1...")
-	http.HandleFunc("/hello", HelloGo)
+	fmt.Println("hello chap1_1...")
+	http.HandleFunc("/gobook/chap1_1", HelloGo)
 	http.ListenAndServe(":8888", nil)
 }
