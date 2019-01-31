@@ -73,8 +73,23 @@ mod文件，里面只有一行
 
 `go mod init gobook`
 
-当我们使用go build，go test以及go list命令时，go会自动检查项目依赖，并更新
-go.mod文件，将依赖关系写入其中。大家也可以下载gobook源码，打开go.mod文件，查看完整文件。
+接下来，我们通过以下命令，手动触发依赖检查，更新mod文件。(后续随时都可以使用该命令，
+将新增的依赖和未使用的module更新到mod文件中)
+
+```
+go mod tidy
+```
+
+后续当我们使用go build，go test以及go list命令时，go也会自动检查项目依赖，并更新
+go.mod文件。
+
+更新完成后，可以通过命令：
+
+```
+go list -m all
+```
+查看项目的依赖信息，或者用`go mod graph`也能达到同样的效果。大家也可以直接打开
+gobook项目中的go.mod文件查看。
 
 更多go mod使用信息，请参考`go mod help`
 
@@ -134,5 +149,11 @@ go list -m -json all
 }
 ```
 再次打开mod文件，已经非常直观的显示版本了。如果使用GoLand IDE，IDE会自动帮你完成go list 动作。
+
+当然，我们也可以通过`go mod edit`命令完成上述动作：
+
+```
+go mod edit -require="github.com/gin-gonic/gin@b869fe1415e4b9eb52f247441830d502aece2d4d"
+```
 
 ---
