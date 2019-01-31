@@ -50,18 +50,89 @@ CGO_LDFLAGS="-g -O2"
 PKG_CONFIG="pkg-config"
 GOGCCFLAGS="……"
 ```
-通过```go help```了解go命令的使用方法，具体命令后续也会慢慢接触和介绍。
+通过`go help`可以了解go命令的使用方法，具体命令后续也会慢慢接触和介绍。
 
 ### go mod 介绍
 
-go mod 命令是1.11版本之后，支持Module之后新增的特性之一。go mod 可以检查代码依赖，
-自动生成项目的mod文件。任何一个源文件目录或者是空目录都可以作为一个module，只要包含
+go mod 命令是1.11版本之后，支持Module之后新增的特性之一。GO Module可以检查代码依赖，
+自动更新项目的mod文件。任何一个源文件目录或者是空目录都可以作为一个module，只要包含
 有mod文件。
 
 #### 初始化Module
 
-通过`go mod init [module name]`来初始化一个Module，完成后在该目录下生成一个
-mod文件，里面只有一行`module [module name]`
+通过
+
+`go mod init [module name]`
+
+先来初始化一个Module，完成后在该目录下生成一个
+mod文件，里面只有一行
+
+`module [module name]`
+
+本项目则初始化为：
+
+`go mod init gobook`
+
+当我们使用go build，go test以及go list命令时，go会自动检查项目依赖，并更新
+go.mod文件，将依赖关系写入其中。大家也可以下载gobook源码，打开go.mod文件，查看完整文件。
+
+更多go mod使用信息，请参考`go mod help`
+
+#### 管理依赖版本
+
+通过上述操作，默认情况下，Module会使用最新的版本，包括最新的tag版本。但通常最新的
+版本不一定是稳定版或者Release版本，这时候我们需要指定版本该如何操作呢？
+在此之前，我们需要先了解版本号的构成。以下是项目中对`github.com/gin-contrib/sse`
+包的依赖示例，之后接**空格**，**空格**之后是一串由字母和数字组成的字符，通过短线分隔开。
+
+```
+github.com/gin-contrib/sse v0.0.0-20190125020943-a7658810eb74 // indirect
+```
+
+短线分隔开的三段组成分别为：
+
+**版本号-时间戳-Hash值**
+
+通常多数情况下，在我们非常明确依赖的版本时，可以在空格后直接写上依赖的版本号即可，如下：
+
+```
+github.com/gin-gonic/gin v1.3.0
+```
+
+如果是一些非Release版本或者还没有正式版本时，我们如何操作呢？
+
+通过一版本管理工具，都会对每一次提交，做一些Hash值，以标识这一次提交。以Github为例，
+对应gin v1.3.0 这一次提交，可以直接在Github上找到如下信息：
+
+```
+commit b869fe1415e4b9eb52f247441830d502aece2d4d
+```
+
+我们可以直接把`b869fe1415e4b9eb52f247441830d502aece2d4d`复制到版本号的位置，如下：
+
+```
+github.com/gin-gonic/gin b869fe1415e4b9eb52f247441830d502aece2d4d
+```
+
+保存后使用以下命令
+
+```
+go list -m -json all
+```
+
+观察下面变化
+
+```
+{
+	"Path": "github.com/gin-gonic/gin",
+	"Version": "v1.3.0", //注意这里
+	"Time": "2018-08-14T08:58:52Z",
+	"Dir": "~/wks/pkg/mod/github.com/gin-gonic/gin@v1.3.0",
+	"GoMod": "~/wks/pkg/mod/cache/download/github.com/gin-gonic/gin/@v/v1.3.0.mod"
+}
+```
+在此打开mod文件，已经非常直观的显示版本了。如果使用GoLand IDE，IDE会自动帮你完成go list 动作。
+
 
 **程序说明：**
 
