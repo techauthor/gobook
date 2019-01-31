@@ -1,4 +1,5 @@
-package chap1_3
+//chap1_3.go
+package main
 
 import (
 	"fmt"

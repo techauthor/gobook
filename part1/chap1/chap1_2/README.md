@@ -157,3 +157,12 @@ go mod edit -require="github.com/gin-gonic/gin@b869fe1415e4b9eb52f247441830d502a
 ```
 
 ---
+
+### 小历史
+
+在go module之前，go项目是需要依赖GOPATH这个环境变量的。一个标准的go项目，需要
+有bin、src，pkg等目录构成。其中：
+
+- src 用来存放源码文件
+- pkg 用来存放编译时生成的中间文件
+- bin 则用来存放编译后生成的可执行文件
