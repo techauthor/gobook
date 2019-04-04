@@ -337,7 +337,7 @@ import "example.com/my/module/mypkg"
    ```
 
    Note that if your dependencies include v2+ modules, or if you are initializing a v2+ module, then after running `go mod init` you might also need to edit your `go.mod` and `.go` code to add `/vN` to import paths and module paths as described in the ["Semantic Import Versioning"](https://github.com/golang/go/wiki/Modules#semantic-import-versioning) section above. This applies even if `go mod init` automatically converted your dependency information from `dep` or other dependency managers. (Because of this, after running `go mod init`, you typically should not run `go mod tidy` until you have successfully run `go build ./...` or similar, which is the sequence shown in this section).
-   请注意，如果您的依赖项包括v2+模块，或者如果您正在初始化v2+模块，那么在运行`go mod init`之后，您可能还需要编辑`go.mod`和`.go`代码以添加`/vn`到`import path`和`module path`，如上文[语义导入版本控制](#Semantic_Import_Versioning）部分所述。即使go mod init自动从dep或其他依赖关系管理器转换依赖关系信息，这也适用。（因此，在运行go mod init之后，在成功运行go build之前，通常不应该运行go mod tidy。/…或类似，即本节所示的顺序）。
+   请注意，如果您的依赖项包括v2+模块，或者如果您正在初始化v2+模块，那么在运行`go mod init`之后，您可能还需要编辑`go.mod`和`.go`代码以添加`/vn`到`import path`和`module path`，如上文<a href="#Semantic_Import_Versioning" target="_self">语义导入版本控制</a>部分所述。即使go mod init自动从dep或其他依赖关系管理器转换依赖关系信息，这也适用。（因此，在运行go mod init之后，在成功运行go build之前，通常不应该运行go mod tidy。/…或类似，即本节所示的顺序）。
 
 3. Build the module. When executed from the root directory of a module, the `./...` pattern matches all the packages within the current module.  `go build` will automatically add missing or unconverted dependencies as needed to satisfy imports for this particular build invocation:
 
