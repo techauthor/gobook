@@ -19,15 +19,15 @@ func HelloGo(writer http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/hello", HelloGo)
+	fmt.Println("hello chap1_1...")
+	http.HandleFunc("/gobook/chap1_1", HelloGo)
 	http.ListenAndServe(":8888", nil)
-	fmt.Println("hello ch2...")
 }
 ```
 
 **程序说明：**
 
-- 当我们通过/hello url访问时，由HelloGo函数来负责执行，并响应给客户端；
+- 当我们通过/gobook/chap1_1 访问时，由HelloGo函数来负责执行，并响应给客户端；
 - HelloGo函数只执行一个非常简单的逻辑，输出字符串“Golang”；
 - ListenAndServe函数，监听8888端口，并启动http server服务；
 
