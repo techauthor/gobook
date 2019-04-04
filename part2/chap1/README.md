@@ -336,57 +336,69 @@ import "example.com/my/module/mypkg"
    $ go mod init github.com/my/repo
    ```
 
-   Note that if your dependencies include v2+ modules, or if you are initializing a v2+ module, then after running `go mod init` you might also need to edit your `go.mod` and `.go` code to add `/vN` to import paths and module paths as described in the ["Semantic Import Versioning"](https://github.com/golang/go/wiki/Modules#semantic-import-versioning) section above. This applies even if `go mod init` automatically converted your dependency information from `dep` or other dependency managers. (Because of this, after running `go mod init`, you typically should not run `go mod tidy` until you have successfully run `go build ./...` or similar, which is the sequence shown in this section).
-   请注意，如果您的依赖项包括v2+模块，或者如果您正在初始化v2+模块，那么在运行`go mod init`之后，您可能还需要编辑`go.mod`和`.go`代码以添加`/vn`到`import path`和`module path`，如上文<a href="#Semantic_Import_Versioning" target="_self">语义导入版本控制</a>部分所述。即使go mod init自动从dep或其他依赖关系管理器转换依赖关系信息，这也适用。（因此，在运行go mod init之后，在成功运行go build之前，通常不应该运行go mod tidy。/…或类似，即本节所示的顺序）。
+   请注意，如果您的依赖项包括v2+模块，或者如果您正在初始化v2+模块，那么在运行`go mod init`之后，您可能还需要编辑`go.mod`和`.go`代码以添加`/vn`到`import path`和`module path`，如上文<a href="#Semantic_Import_Versioning" target="_self">语义导入版本控制</a>部分所述。即使go mod init自动从`dep`或9种支持的依赖格式转换依赖关系信息，这也适用。（因此，在运行`go mod init`之后，在成功运行`go build`之前，通常不应该立即运行`go mod tidy`，更应该是按照本节介绍的顺序）。
 
-3. Build the module. When executed from the root directory of a module, the `./...` pattern matches all the packages within the current module.  `go build` will automatically add missing or unconverted dependencies as needed to satisfy imports for this particular build invocation:
-
+3. 构建模块，当从模块的根目录执行`build`命令时，`./..`模式匹配当前模块中的所有包。`go build`将根据需要自动添加缺少的或未转换的依赖项，以满足构建需要。
    ```
    $ go build ./...
    ```
-4. Test the module as configured to ensure that it works with the selected versions:
 
+4. 按配置测试模块，以确保其与所选版本一起工作：
    ```
    $ go test ./...
    ```
 
-5. (Optional) Run the tests for your module plus the tests for all direct and indirect dependencies to check for incompatibilities:
-
+5. （可选）运行模块的测试以及所有直接和间接依赖项的测试，以检查兼容性：
    ```
    $ go test all
    ```
 
-Prior to tagging a release, see the ["How to Prepare for a Release"](https://github.com/golang/go/wiki/Modules#how-to-prepare-for-a-release) section below.
+在标记发布之前，请参阅下面的“["How to Prepare for a Release"](https://github.com/golang/go/wiki/Modules#how-to-prepare-for-a-release) ”部分。
 
-For more information on all of these topics, the primary entry point to the official modules documentation is [available on golang.org](https://golang.org/cmd/go/#hdr-Modules__module_versions__and_more).
+更多主题相关信息，都可以在[官方modules文档](https://golang.org/cmd/go/#hdr-Modules__module_versions__and_more)中的找到入口。
 
-## How to Upgrade and Downgrade Dependencies
+## How to Upgrade and Downgrade Dependencies（如何对依赖项做版本升级和降级处理）
 
-Day-to-day upgrading and downgrading of dependencies should be done using 'go get', which will automatically update the `go.mod` file. Alternatively, you can edit `go.mod` directly.
+使用“go get”完成依赖项的日常升级和降级，它将自动更新`go.mod`文件。或者，您可以直接编辑go.mod，指定依赖项的版本。
 
-In addition, go commands like 'go build', 'go test', or even 'go list' will automatically add new dependencies as needed to satisfy imports (updating `go.mod` and downloading the new dependencies).
+此外，“go build”、“go test”甚至“go list”等go命令将根据需要自动添加新的依赖项以满足导入需要（更新go.mod并下载新的依赖项）。
 
-To view available minor and patch upgrades for all direct and indirect dependencies, run `go list -u -m all`.
+要查看所有直接和间接依赖项的可用可升级的`minor`和`patch`版本，请运行`go list -u -m all`。
 
-To upgrade to the latest version for all direct and indirect dependencies of the current module:
- * run `go get -u` to use the latest *minor or patch* releases
- * run `go get -u=patch` to use the latest *patch* releases
+将当前模块的所有直接和间接依赖项升级到最新版本：
 
-To upgrade or downgrade to a more specific version, 'go get' allows version selection to be overridden by adding an @version suffix or ["module query"](https://golang.org/cmd/go/#hdr-Module_queries) to the package argument, such as `go get foo@v1.6.2`, `go get foo@e3702bed2`, or `go get foo@'<v1.6.2'`.
+ * 运行 `go get -u` 使用最新发布的*minor 或 patch*版本
+ * 运行 `go get -u=patch` 使用最新发布的*patch* 版本
 
-`go get foo` updates to the latest version with a [semver](https://semver.org/) tag, or the the latest known commit if there are no semver tags ([details](https://golang.org/cmd/go/#hdr-Module_aware_go_get)). `go get foo` is equivalent to `go get foo@latest` — in other words, `@latest` is the default if no `@` version is specified.
+要升级或降级到更具体的版本，“go get”允许通过向package参数添加@version后缀或“module query”的方式来覆盖版本的自动选择，例如：`go get foo@v1.6.2、go` 或 `get foo@e3702bed2` 或 `go get foo@'<v1.6.2'`。
 
-Note that a `-u` in `go get -u foo` and `go get -u foo@latest` also upgrades all the direct and indirect dependencies of `foo`. A common starting point is instead `go get foo` or `go get foo@latest` without a `-u` (and after things are working, consider `go get -u=patch foo`, `go get -u foo`, `go get -u`, or `go get -u=patch`).
+`go get foo` 获取使用foo semver tag的最新版本来更新，如果没有semver tag，则获取已知的最新提交。`go get foo`相当于`go get foo@latest` - 换句话说，如果未指定@version，则默认为@latest。
 
-Using a branch name such as `go get foo@master` is one way to obtain the latest commit regardless of whether or not it has a semver tag.
+注意，`go get -u foo`和`go get -u foo@latest` 同时还升级了foo的所有直接和间接依赖。一种常见的做法是不带`-u`的`go get foo`或`go get foo@latest`（并且在此之后，考虑选择性的使用`go get -u=patch foo`、`go get -u foo`、`go get -u` 或 `go get -u=patch`）。
 
-In general, module queries that do not resolve to a semver tag will be recorded as [pseudo-versions](https://tip.golang.org/cmd/go/#hdr-Pseudo_versions) in the `go.mod` file.
+使用诸如`go get foo@master`之类的分支名称是获取最新提交的一种方法，不管它是否有semver tag。
 
-See the ["Module-aware go get"](https://golang.org/cmd/go/#hdr-Module_aware_go_get) and ["Module queries"](https://golang.org/cmd/go/#hdr-Module_queries) sections of the `go` command documentation for more information on the topics here.
+通常，无法解析为semver tag的模块查询，将作为`pseudo-versions`(伪版本)记录在`go.mod`文件中。
 
-Modules are capable of consuming packages that have not yet opted into modules, including recording any available semver tags in `go.mod` and using those semver tags to upgrade or downgrade. Modules can also consume packages that do not yet have any proper semver tags (in which case they will be recorded using pseudo-versions in `go.mod`).
+**[pseudo-versions](https://tip.golang.org/cmd/go/#hdr-Pseudo_versions) （伪版本）**
 
-After upgrading or downgrading any dependencies, you may then want to run the tests again for all packages in your build (including direct and indirect dependencies) to check for incompatibilities:
+`go.mod`文件和go命令通常使用语义版本作为描述模块版本的标准形式，这样就可以比较决定版本间的先后。像v1.2.3这样的模块版本是通过版本库的提交而来的，对于一直未做tag的提交，可以使用“伪版本”如`v0.0.0-yyyymmddhhmmss-abcdefabcdef`，其中时间是以UTC表示的提交时间，最后的后缀是提交哈希的前缀。时间部分确定可以将两个伪版本的先后，哈希值代表提交标识，前缀（在本例中为v0.0.0）是从最新的tagged version产生的。
+
+有三种伪版本形式：
+
+* vX.0.0-yymmddhhmmss-abcdefabcdefabcdef - 被用于在目标提交之前没有具有适合更早的`major`版本的时候。
+
+* vX.Y.Z-pre.0.yyyymmddhhmmss-abcdefabcdef - 被用于在目标提交之前的最新提交版本为vX.Y.Z-pre的时候。
+
+* vX.Y.(Z+1)-0.yyyymmddhhmmss-abcdefabcdef - 被用于在目标提交之前的最新提交版本为vX.Y.Z的时候。
+
+伪版本永远不需要手工键入：go命令将接受纯提交哈希，并自动将其转换为伪版本（或标记版本，如果可用）。
+
+参考 ["Module-aware go get"](https://golang.org/cmd/go/#hdr-Module_aware_go_get) 和 ["Module queries"](https://golang.org/cmd/go/#hdr-Module_queries) 以查看与主题相关的更多信息。
+
+模块能够使用尚未进行模块化的包，还可以使用还没有任何合适semver tag的包（在这种情况下，它们将使用go.mod中的伪版本进行记录），并对他们做升级和降级处理。
+
+在升级或降级任何依赖项之后，您可能需要对构建中的所有包（包括直接和间接依赖项）再次运行测试，以检查不兼容性：
 
    ```
    $ go test all
