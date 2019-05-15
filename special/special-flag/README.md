@@ -278,6 +278,6 @@ func main() {
 
 通过调用flag.Parse()方法完成命令行参数的解析，上述实例的Init函数中已经使用到。需要注意的是，参数的解析与支持的命令行格式有关，无效的命令行格式无法正确解析。
 
-[返回目录](https://github.com/techauthor/gobook/blob/master/gobook/README.md)
+[返回目录](https://github.com/techauthor/gobook/blob/master/README.md)
 
 
