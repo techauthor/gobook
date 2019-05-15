@@ -146,3 +146,138 @@ func main() {
 ```
 
 special_flag_1.go 中还提供了StringVar函数的示例，供参考。
+
+#### 第三种定义方法：
+```
+// Var defines a flag with the specified name and usage string. The type and
+// value of the flag are represented by the first argument, of type Value, which
+// typically holds a user-defined implementation of Value. For instance, the
+// caller could create a flag that turns a comma-separated string into a slice
+// of strings by giving the slice the methods of Value; in particular, Set would
+// decompose the comma-separated string into the slice.
+func Var(value Value, name string, usage string) {
+	CommandLine.Var(value, name, usage)
+}
+```
+
+使用flag.Var函数定义命令行参数，我们可以使用自定义类型并实现flag.Value接口来接收命令行参数。以下是flag.Value接口的声明:
+
+```
+// Value is the interface to the dynamic value stored in a flag.
+// (The default value is represented as a string.)
+//
+// If a Value has an IsBoolFlag() bool method returning true,
+// the command-line parser makes -name equivalent to -name=true
+// rather than using the next command-line argument.
+//
+// Set is called once, in command line order, for each flag present.
+// The flag package may call the String method with a zero-valued receiver,
+// such as a nil pointer.
+type Value interface {
+	String() string
+	Set(string) error
+}
+```
+
+其中我们需要在Set方法中完成参数值的解析，在String方法中设置参数的默认值。
+
+假设我们有一个参数v被调用
+```
+cmd -v a,b,c
+```
+
+下面我们使用自定义的string slice来接收"a,b,c"的值，首先定义类型:
+```
+//自定义一个string slice来接收命令行参数
+type ValueDemo []string
+```
+
+实现flag.Value接口：
+```
+//实现flag.Vaule接口Set方法
+func (v *ValueDemo) Set(s string) (e error) {
+	//解析命令行参数值
+	*v = ValueDemo(strings.Split(s, ","))
+	return
+}
+
+//实现flag.Vaule接口String方法
+func (v *ValueDemo) String() string {
+	//初始化默认值
+	*v = ValueDemo(strings.Split("a,b,c", ","))
+	return "example `a,b,c`"
+}
+```
+
+上面代码比较简单，在Set函数中，切分","分隔符并赋值给ValueDemo实例，String函数中设置默认值为“a,b,c”。接下来调用flag.Var函数：
+
+```
+//声明类型为ValueDemo的变量v，用来接收参数值
+var v ValueDemo
+
+func init() {
+	//定义名为“v”的命令行参数，并使用自定义类型为ValueDemo的变量v绑定参数值
+	flag.Var(&v, "v", "demo flag.Var function")
+	flag.Parse()
+}
+```
+
+完整代码如下：
+```
+package main
+
+import (
+	"flag"
+	"fmt"
+	"strings"
+)
+
+//自定义一个string slice来接收命令行参数
+type ValueDemo []string
+
+//实现flag.Vaule接口Set方法
+func (v *ValueDemo) Set(s string) (e error) {
+	//解析命令行参数值
+	*v = ValueDemo(strings.Split(s, ","))
+	return
+}
+
+//实现flag.Vaule接口String方法
+func (v *ValueDemo) String() string {
+	//初始化默认值
+	*v = ValueDemo(strings.Split("a,b,c", ","))
+	return "example `-v a,b,c`"
+}
+
+//声明类型为ValueDemo的变量v，用来接收参数值
+var v ValueDemo
+
+func init() {
+	//定义名为“v”的命令行参数，并使用自定义类型为ValueDemo的变量v绑定参数值
+	flag.Var(&v, "v", "demo flag.Var function")
+	flag.Parse()
+}
+
+func main() {
+	fmt.Println(v)
+
+	// Input:
+	// go run special_flag_2.go
+	// Output：
+	// false [a b c]
+
+	// Input:
+	// go run special_flag_2.go -v java,go,c++
+	// Output：
+	// [java go c++]
+}
+
+```
+
+### 命令行参数的解析
+
+通过调用flag.Parse()方法完成命令行参数的解析，上述实例的Init函数中已经使用到。需要注意的是，参数的解析与支持的命令行格式有关，无效的命令行格式无法正确解析。
+
+[返回目录](README.md)
+
+
