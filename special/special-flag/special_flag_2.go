@@ -18,9 +18,9 @@ func (v *ValueDemo) Set(s string) (e error) {
 
 //实现flag.Vaule接口String方法
 func (v *ValueDemo) String() string {
-	//初始化默认值
-	*v = ValueDemo(strings.Split("a,b,c", ","))
-	return "example `-v a,b,c`"
+	//初始化默认值v
+	*v = []string{"a", "b", "c"}
+	return fmt.Sprint(*v)
 }
 
 //声明类型为ValueDemo的变量v，用来接收参数值

@@ -204,8 +204,8 @@ func (v *ValueDemo) Set(s string) (e error) {
 //实现flag.Vaule接口String方法
 func (v *ValueDemo) String() string {
 	//初始化默认值
-	*v = ValueDemo(strings.Split("a,b,c", ","))
-	return "example `a,b,c`"
+	*v = []string{"a","b","c"}
+    	return fmt.Sprint(*v)
 }
 ```
 
@@ -245,8 +245,8 @@ func (v *ValueDemo) Set(s string) (e error) {
 //实现flag.Vaule接口String方法
 func (v *ValueDemo) String() string {
 	//初始化默认值
-	*v = ValueDemo(strings.Split("a,b,c", ","))
-	return "example `-v a,b,c`"
+	*v = []string{"a","b","c"}
+    	return fmt.Sprint(*v)
 }
 
 //声明类型为ValueDemo的变量v，用来接收参数值
@@ -276,7 +276,81 @@ func main() {
 
 ### 命令行参数的解析
 
-通过调用flag.Parse()方法完成命令行参数的解析，上述实例的Init函数中已经使用到。需要注意的是，参数的解析与支持的命令行格式有关，无效的命令行格式无法正确解析。
+通过调用flag.Parse()方法完成命令行参数的解析，上述实例的Init函数中已经使用到。需要注意的是，参数的解析与支持的命令行格式有关，无效的命令行格式无法被正确解析。
+
+### 一些例子
+下面介绍一些复杂的例子
+
+#### flag内置Duration类型参数使用
+
+除了基本的数据类型，flag包也提供了Duration类型的参数定义函数:flag.Duration(...)和flag.DurationVar(...)，下面就以DurationVar函数为例，介绍Duration类型参数的使用方法。
+
+参考代码：
+
+```
+package main
+
+import (
+	"flag"
+	"fmt"
+	"time"
+)
+//声明命令行参数绑定变量
+var d time.Duration
+
+func init() {
+	//忽略error
+	defalutD, _ := time.ParseDuration("1h20m30s")
+	//定义命令行参数-d，将参数值绑定到变量d，默认值为“1h20m30s”
+	flag.DurationVar(&d, "d", defalutD, "-d 1h20m30s")
+	flag.Parse()
+}
+
+func main() {
+	fmt.Println(d)
+
+	//Input:
+	//go run special_flag_3.go
+	//Output:
+	//1h20m30s
+
+	//Input:
+	//go run special_flag_3.go -d 3h30m30s
+	//Output:
+	//3h30m30s
+}
+
+```
+
+### 重点强调
+
+上述介绍了三种方法来定义命令行参数，不论是哪一种方法，归根结底最终都是调用Var(...)函数完成，包括基本的数据类型。
+
+flag包中定义了所有基本数据类型对应于flag.Value接口的实现，如：boolValue、intValue、stringValue等等，他们都实现了flag.Value接口。
+
+每一个flag都对应于一个Flag类型的实例。下面是Flag类型的定义：
+```
+// A Flag represents the state of a flag.
+type Flag struct {
+	Name     string // name as it appears on command line
+	Usage    string // help message
+	Value    Value  // value as set
+	DefValue string // default value (as text); for usage message
+}
+```
+针对flag.Value接口的实例化
+
+`flag := &Flag{name, usage, value, value.String()}`
+
+### 有用的函数
+
+#### 1. flag.PrintDefaults()、flag.Usage()
+
+输出所有flag的默认值和使用说明
+
+#### 2. flag.Lookup(name string)
+
+根据所定义的命令行参数命，返回对应的Flag类型实例的指针。
 
 [返回目录](https://github.com/techauthor/gobook/blob/master/README.md)
 
