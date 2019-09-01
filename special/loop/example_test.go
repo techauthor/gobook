@@ -1,8 +1,8 @@
-package main
+package special_loop
 
 import (
 	"fmt"
-	"time"
+	"sort"
 )
 
 func ExampleFor() {
@@ -20,13 +20,18 @@ func ExampleForRangeMap() {
 		0: "0",
 		1: "1",
 	}
-	for key, value := range m {
-		fmt.Printf("key is:[%d] and the value is:[%s]\n", key, value)
+	var s []int
+	for key := range m {
+		s = append(s, key)
+	}
+	sort.Ints(s)
+	for _, v := range s {
+		fmt.Printf("key is:[%d] and the value is:[%s]\n", v, m[v])
 	}
 
 	// Output:
-	// key is:0 and the value is:0
-	// key is:1 and the value is:1
+	//key is:[0] and the value is:[0]
+	//key is:[1] and the value is:[1]
 }
 
 func ExampleForRangeSlice() {
@@ -35,22 +40,24 @@ func ExampleForRangeSlice() {
 		fmt.Printf("index is:[%d] and the value is:[%d]\n", index, value)
 	}
 	// Output:
-	// index is:0 and the value is:0
-	// index is:1 and the value is:1
-	// index is:2 and the value is:2
+	// index is:[0] and the value is:[0]
+	// index is:[1] and the value is:[1]
+	// index is:[2] and the value is:[2]
 }
 
 func ExampleForChannel() {
-	fmt.Println("print 3 timestamps like this:")
-	tick := time.Tick(1 * time.Second)
-	i := 0
-	for now := range tick { //the variable `now` can be omitted if it's unused,like this:`for range tick`
-		if i > 2 {
-			break
-		}
-		fmt.Printf("now time is:%s\n", now)
-		i++
+	ch := make(chan int, 3)
+	for i := 0; i < 3; i++ {
+		ch <- i
 	}
+	close(ch)
+	for index := range ch { //the variable `now` can be omitted if it's unused,like this:`for range tick`
+		fmt.Println(index)
+	}
+	// Output:
+	//0
+	//1
+	//2
 }
 
 func ExampleForRangeIgnoreVar() {
@@ -65,14 +72,15 @@ func ExampleForRangeIgnoreVar() {
 }
 
 func ExampleForDeadLoop() {
+	ch := make(chan string)
+	go func() {
+		ch <- "Done"
+	}()
 	for {
-		fmt.Println("dead loop....")
+		// your loop code
+		fmt.Println(<-ch)
+		break
 	}
 	// Output:
-	// dead loop....
-	// ...
-}
-
-func main() {
-	//ExampleForChannel()
+	// Done
 }
