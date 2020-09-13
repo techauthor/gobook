@@ -56,7 +56,7 @@ $ cd ~/gobook/part1/chap1/
 $ ./chap1
 ```
 
-浏览器输入[http://localhost:8888/hello](http://localhost:8888/hello)
+浏览器输入[http://localhost:8888/gobook/chap1_1](http://localhost:8888/hello)
 
 Bingo~!
 

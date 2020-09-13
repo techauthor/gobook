@@ -1,5 +1,7 @@
 module github.com/techauthor/gobook
 
+go 1.14
+
 require (
 	github.com/dgraph-io/dgo v0.0.0-20190501005019-7517ac021e22
 	github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 // indirect
