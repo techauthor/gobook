@@ -7,7 +7,7 @@ A Golang Book
 
 #### 1.1 [一个简单的HttpServer](part1/chap1/chap1_1/README.md)
 
-#### 1.2 [下载安装Go 1.11](part1/chap1/chap1_2/README.md)
+#### 1.2 [下载安装Go 1.15](part1/chap1/chap1_2/README.md)
 
 ## 第二部分
 
