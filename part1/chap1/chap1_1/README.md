@@ -40,7 +40,7 @@ $ cd ~/gobook/part1/chap1/
 $ go run ch1_1.go
 ```
 
-浏览器输入[http://localhost:8888/hello](http://localhost:8888/hello)
+浏览器输入[http://localhost:8888/gobook/chap1_1](http://localhost:8888/gobook/chap1_1)
 
 如果还不尽兴，可将代码编译为可执行文件:
 
@@ -56,7 +56,7 @@ $ cd ~/gobook/part1/chap1/
 $ ./chap1
 ```
 
-浏览器输入[http://localhost:8888/gobook/chap1_1](http://localhost:8888/hello)
+浏览器输入[http://localhost:8888/gobook/chap1_1](http://localhost:8888/gobook/chap1_1)
 
 Bingo~!
 
