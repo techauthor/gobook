@@ -21,6 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f0526539-f9ca-4a56-a3c1-38153d7bb146" name="Default Changelist" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/part1/chap1/chap1_1/chap1_1.go" beforeDir="false" afterPath="$PROJECT_DIR$/part1/chap1/chap1_1/chap1_1.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="go.vgo" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -187,14 +190,14 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="426" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1599990028857" />
-    <state x="221" y="89" key="SettingsEditor" timestamp="1599989978997">
+    <state x="221" y="89" key="SettingsEditor" timestamp="1600054895688">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1599989978997" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1599989643410">
+    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1600054895688" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1599991037944">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1599989643410" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1599991037944" />
   </component>
   <component name="masterDetails">
     <states>
