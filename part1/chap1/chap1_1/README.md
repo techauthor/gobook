@@ -37,7 +37,7 @@ func main() {
 
 ```
 $ cd ~/gobook/part1/chap1/
-$ go run ch1_1.go
+$ go run chap1_1.go
 ```
 
 浏览器输入[http://localhost:8888/gobook/chap1_1](http://localhost:8888/gobook/chap1_1)
@@ -53,7 +53,7 @@ $ go build
 
 ```
 $ cd ~/gobook/part1/chap1/
-$ ./chap1
+$ ./chap1_1
 ```
 
 浏览器输入[http://localhost:8888/gobook/chap1_1](http://localhost:8888/gobook/chap1_1)
