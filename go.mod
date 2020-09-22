@@ -11,6 +11,7 @@ require (
 	github.com/json-iterator/go v1.1.10
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/ugorji/go/codec v0.0.0-20190320090025-2dc34c0b8780 // indirect
+	golang.org/x/tools v0.0.0-20200918232735-d647fc253266 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
